@@ -22,7 +22,7 @@ function createChart(ctx, chartType, labels, datasets, displayX = false) {
                     beginAtZero: true,
                     ticks: {
                         font: {
-                            size: 40,
+                            size: 20,
                         },
                     },
                 },
@@ -34,7 +34,7 @@ function createChart(ctx, chartType, labels, datasets, displayX = false) {
                 legend: {
                     labels: {
                         font: {
-                            size: 40,
+                            size: 20,
                         },
                     },
                 },
@@ -134,7 +134,6 @@ function updateImage() {
     img.src = "/obstruction_map_image?" + new Date().getTime();
 }
 
-
 /**
  * Fetches the initial data from the server and logs it to the console.
  *
@@ -147,8 +146,8 @@ function getInitalData() {
             console.log(data);
             const dishyVersion = document.getElementById("dishyVersion");
             dishyVersion.innerHTML = data.dishy_model;
-        })
-    })
+        });
+    });
 }
 
 /**
@@ -157,6 +156,6 @@ function getInitalData() {
  */
 window.onload = function () {
     updateImage();
-    getInitalData()
+    getInitalData();
 };
 setInterval(updateImage, 60000);

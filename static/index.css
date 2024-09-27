@@ -1,4 +1,76 @@
-canvas {
-    width: 600px !important;
-    height: 300px !important;
+/* Fonts provided by https://github.com/amcchord/datto-d-din */
+
+@font-face {
+    font-family: "D-DIN";
+    src: url("D-DIN.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "D-DIN-Bold";
+    src: url("D-DIN-Bold.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --background: #000000;
+    --dark: #0c0c0c;
+    --light: #272727;
+    --hover: #e1e1e1;
+    --main: #ffffff;
+}
+
+body {
+    --sb-width: 5rem;
+    font-family: "D-DIN", sans-serif;
+    background-color: var(--background);
+    color: var(--main);
+}
+
+body.sb-expanded {
+    --sb-width: 12.5rem;
+}
+
+h1,
+h2 {
+    font-family: "D-DIN-Bold", sans-serif;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-radius: 4px;
+    background-color: var(--dark);
+}
+
+.chart {
+    width: 40vw !important;
+    height: 400px !important;
+    padding: 10px;
+}
+
+.charts {
+    display: flex;
+    flex-direction: row;
+}
+
+.button {
+    font-family: "D-DIN-Bold", sans-serif;
+    font-size: medium;
+    border-radius: 4px;
+    background-color: var(--main);
+    border-color: var(--background);
+    padding: 20px;
+    width: 200px;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: var(--hover);
 }

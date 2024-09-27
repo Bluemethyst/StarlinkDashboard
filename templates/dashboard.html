@@ -6,23 +6,63 @@
         <title>Dashboard</title>
         <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lucide@0.446.0/dist/cjs/lucide.min.js"></script>
         <link
             rel="stylesheet"
             type="text/css"
             href="{{ url_for('static',filename='index.css') }}"
         />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+        />
     </head>
     <body>
-        <h2>Starlink Dashboard</h2>
-        <p id="dishyVersion"></p>
-        <a href="{{ url_for('logout') }}">Logout</a>
-        <canvas id="upDownChart" width="400" height="200"></canvas>
-        <canvas id="latencyChart" width="200" hieght="100"></canvas>
-        <input type="button" onclick="dishyReboot()">Dishy Reboot</input>
-        <input type="button" onclick="dishyStow()">Dishy Stow</input>
-        <input type="button" onclick="dishyUnstow()">Dishy Unstow</input>
+        <nav class="header">
+            <h2>Starlink Dashboard</h2>
+            <p id="dishyVersion"></p>
+            <a href="{{ url_for('logout') }}">
+                <button class="button" type="button">Logout</button>
+            </a>
+        </nav>
+        <img
+            src="https://unpkg.com/lucide-static@latest/icons/satellite-dish.svg"
+        />
+        <div class="charts">
+            <canvas
+                class="chart"
+                id="upDownChart"
+                width="400"
+                height="200"
+            ></canvas>
+            <canvas
+                class="chart"
+                id="latencyChart"
+                width="200"
+                hieght="100"
+            ></canvas>
+        </div>
 
-        <img id="dynamicImage" src="/obstruction_map_image" alt="Obstruction Map" width="500">
+        <div class="buttons">
+            <button class="button" type="button" onclick="dishyReboot()">
+                Dishy Reboot
+            </button>
+            <button class="button" type="button" onclick="dishyStow()">
+                Dishy Stow
+            </button>
+            <button class="button" type="button" onclick="dishyUnstow()">
+                Dishy Unstow
+            </button>
+        </div>
+        <div class="image-container">
+            <img
+                class="image"
+                id="dynamicImage"
+                src="/obstruction_map_image"
+                alt="Obstruction Map"
+                width="500"
+            />
+        </div>
         <script
             type="text/javascript"
             src="{{ url_for('static', filename='main.js') }}"

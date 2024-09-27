@@ -20,9 +20,11 @@
                 placeholder="Password"
                 required
             />
-            <button type="submit">Login</button>
+            <button class="button" type="submit">Login</button>
         </form>
-        <a href="{{ url_for('register') }}">Register</a>
+        <a href="{{ url_for('register') }}">
+            <button class="button" type="button">Register</button>
+        </a>
         {% with messages = get_flashed_messages(with_categories=true) %} {% if
         messages %}
         <ul>
