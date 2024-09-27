@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dashboard</title>
+        <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static',filename='index.css') }}"
+        />
+    </head>
+    <body>
+        <h2>Starlink Dashboard</h2>
+        <p id="dishyVersion"></p>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <canvas id="upDownChart" width="400" height="200"></canvas>
+        <canvas id="latencyChart" width="200" hieght="100"></canvas>
+        <input type="button" onclick="dishyReboot()">Dishy Reboot</input>
+        <input type="button" onclick="dishyStow()">Dishy Stow</input>
+        <input type="button" onclick="dishyUnstow()">Dishy Unstow</input>
+
+        <img id="dynamicImage" src="/obstruction_map_image" alt="Obstruction Map" width="500">
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='main.js') }}"
+        ></script>
+    </body>
+</html>
