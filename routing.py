@@ -1,5 +1,6 @@
 import sqlite3, os, starlink_grpc
-from flask import flash, redirect, render_template, request, send_file, url_for
+import time
+from flask import flash, jsonify, redirect, render_template, request, send_file, url_for
 from flask_login import login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -15,7 +16,8 @@ def routing(app, database):
 
     @app.route("/get_inital_data")
     def get_inital_data():
-        return get_starlink_model()
+        starlink_model = get_starlink_model()
+        return jsonify(starlink_model)
 
     @app.route("/dashboard")
     @login_required
@@ -27,7 +29,7 @@ def routing(app, database):
     def logout():
         logout_user()
         return redirect(url_for("login"))
-    
+
     @app.route("/obstruction_map_image")
     def obstruction_map_image():
         generate_obstruction_map_svg(starlink_grpc.obstruction_map())
@@ -69,5 +71,3 @@ def routing(app, database):
             except sqlite3.IntegrityError:
                 flash("Username already exists", "danger")
         return render_template("register.html")
-
-    

@@ -130,7 +130,7 @@ function dishyUnstow() {
  * obstruction map image every 10 seconds.
  */
 function updateImage() {
-    const img = document.getElementById("dynamicImage");
+    const img = document.getElementById("obstruction-map");
     img.src = "/obstruction_map_image?" + new Date().getTime();
 }
 
@@ -144,7 +144,7 @@ function getInitalData() {
     fetch("/get_inital_data").then((response) => {
         response.json().then((data) => {
             console.log(data);
-            const dishyVersion = document.getElementById("dishyVersion");
+            const dishyVersion = document.getElementById("dishy-version");
             dishyVersion.innerHTML = data.dishy_model;
         });
     });

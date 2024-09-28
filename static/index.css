@@ -23,14 +23,9 @@
 }
 
 body {
-    --sb-width: 5rem;
     font-family: "D-DIN", sans-serif;
     background-color: var(--background);
     color: var(--main);
-}
-
-body.sb-expanded {
-    --sb-width: 12.5rem;
 }
 
 h1,
@@ -48,6 +43,11 @@ h2 {
     background-color: var(--dark);
 }
 
+.data {
+    display: flex;
+    flex-direction: row;
+}
+
 .chart {
     width: 40vw !important;
     height: 400px !important;
@@ -59,6 +59,20 @@ h2 {
     flex-direction: row;
 }
 
+.parent {
+    position: absolute;
+    right: 8px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin-top: 8px;
+    background-color: var(--dark);
+    border-radius: 4px;
+}
+
 .button {
     font-family: "D-DIN-Bold", sans-serif;
     font-size: medium;
@@ -66,11 +80,24 @@ h2 {
     background-color: var(--main);
     border-color: var(--background);
     padding: 20px;
+    margin: 4px;
     width: 200px;
     border: none;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .button:hover {
     background-color: var(--hover);
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 8px;
+    border-radius: 4px;
+    color: var(--main);
+    background-color: var(--dark);
 }
