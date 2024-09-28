@@ -55,8 +55,9 @@ h2 {
 }
 
 .charts {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
 }
 
 .parent {
@@ -100,4 +101,12 @@ h2 {
     border-radius: 4px;
     color: var(--main);
     background-color: var(--dark);
+}
+
+.info {
+    margin-top: 8px;
+    background-color: var(--dark);
+    padding: 10px;
+    padding-left: 20px;
+    border-radius: 4px;
 }

@@ -5,7 +5,7 @@ from flask_login import login_required, login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from database import get_db
-from starlink import generate_obstruction_map_svg, get_starlink_model
+from starlink import generate_obstruction_map_svg, get_starlink_inital_data
 from user import User
 
 
@@ -16,7 +16,7 @@ def routing(app, database):
 
     @app.route("/get_inital_data")
     def get_inital_data():
-        starlink_model = get_starlink_model()
+        starlink_model = get_starlink_inital_data()
         return jsonify(starlink_model)
 
     @app.route("/dashboard")

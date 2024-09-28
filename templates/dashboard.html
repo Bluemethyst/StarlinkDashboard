@@ -26,18 +26,9 @@
         </nav>
         <div class="data">
             <div class="charts">
-                <canvas
-                    class="chart"
-                    id="upDownChart"
-                    width="400"
-                    height="200"
-                ></canvas>
-                <canvas
-                    class="chart"
-                    id="latencyChart"
-                    width="200"
-                    hieght="100"
-                ></canvas>
+                <canvas class="chart" id="upDownChart"></canvas>
+                <canvas class="chart" id="latencyChart"></canvas>
+                <canvas class="chart" id="powerUsageChart"></canvas>
             </div>
 
             <div class="parent">
@@ -67,6 +58,12 @@
                         alt="Obstruction Map"
                         width="200"
                     />
+                </div>
+                <div class="info">
+                    <p id="fraction-obstructed"></p>
+                    <p id="connection-state"></p>
+                    <p id="alerts-label"></p>
+                    <ul id="alerts"></ul>
                 </div>
             </div>
         </div>

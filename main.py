@@ -7,7 +7,7 @@ from flask_login import LoginManager
 
 from database import get_db, init_db
 from routing import routing
-from starlink import fetch_current_data, get_starlink_model
+from starlink import fetch_current_data, get_starlink_inital_data
 from user import User
 
 app = Flask(__name__)

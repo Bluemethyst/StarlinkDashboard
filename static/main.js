@@ -1,5 +1,10 @@
 const socket = io();
 
+const fractionObstructed = document.getElementById("fraction-obstructed");
+const connectionState = document.getElementById("connection-state");
+const alertList = document.getElementById("alerts");
+const alertsLabel = document.getElementById("alerts-label");
+
 /**
  * Creates a Chart.js chart on the given ctx with the given type, labels, datasets, and whether to display the X axis.
  * @param {CanvasRenderingContext2D} ctx - The context to draw the chart on.
@@ -22,7 +27,7 @@ function createChart(ctx, chartType, labels, datasets, displayX = false) {
                     beginAtZero: true,
                     ticks: {
                         font: {
-                            size: 20,
+                            size: 40,
                         },
                     },
                 },
@@ -34,7 +39,7 @@ function createChart(ctx, chartType, labels, datasets, displayX = false) {
                 legend: {
                     labels: {
                         font: {
-                            size: 20,
+                            size: 40,
                         },
                     },
                 },
@@ -80,6 +85,21 @@ const upDownChart = createChart(
     ]
 );
 
+const powerUsageChart = createChart(
+    document.getElementById("powerUsageChart").getContext("2d"),
+    "line",
+    [],
+    [
+        {
+            label: "Power Usage - Watts",
+            data: [], // Data points
+            borderColor: "rgba(227, 212, 48, 1)",
+            borderWidth: 5,
+            fill: true,
+        },
+    ]
+);
+
 socket.on("data_update", function (rawdata) {
     let data = JSON.parse(rawdata);
     // Push new data point and label
@@ -87,19 +107,42 @@ socket.on("data_update", function (rawdata) {
     console.log(data);
     latencyChart.data.labels.push(currentTime);
     upDownChart.data.labels.push(currentTime);
+    powerUsageChart.data.labels.push(currentTime);
 
-    latencyChart.data.datasets[0].data.push(data.pop_ping_latency_ms);
+    fractionObstructed.innerHTML = `Fraction Obstructed: ${data.fraction_obstructed.toFixed(
+        2
+    )}`;
+    connectionState.innerHTML = `Connection State: ${data.state}`;
+
+    for (const [key, value] of Object.entries(data.alerts)) {
+        if (value) {
+            const listItem = document.createElement("li");
+            listItem.textContent = key;
+            alerts.appendChild(listItem);
+        } else {
+            alertsLabel.innerHTML = "Alerts: NONE";
+        }
+    }
+
+    latencyChart.data.datasets[0].data.push(data.ping_latency_ms);
+
+    powerUsageChart.data.datasets[0].data.push(data.power_usage_watts);
 
     upDownChart.data.datasets[0].data.push(
-        data.downlink_throughput_bps / 1000000
+        data.download_throughput_bps / 1000000
     ); // Update with new data
     upDownChart.data.datasets[1].data.push(
-        data.uplink_throughput_bps / 1000000
+        data.upload_throughput_bps / 1000000
     );
 
     if (latencyChart.data.labels.length > 100) {
         latencyChart.data.labels.shift();
         latencyChart.data.datasets[0].data.shift();
+    }
+
+    if (powerUsageChart.data.labels.length > 100) {
+        powerUsageChart.data.labels.shift();
+        powerUsageChart.data.datasets[0].data.shift();
     }
 
     // Limit the number of data points shown
@@ -111,6 +154,7 @@ socket.on("data_update", function (rawdata) {
 
     upDownChart.update(); // Refresh the chart
     latencyChart.update();
+    powerUsageChart.update();
 });
 
 function dishyReboot() {

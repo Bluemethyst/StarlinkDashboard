@@ -1,5 +1,7 @@
 import starlink_grpc, json, png
 
+from google.protobuf.json_format import MessageToDict
+
 DEFAULT_OBSTRUCTED_COLOR = "FFED524A"
 DEFAULT_UNOBSTRUCTED_COLOR = "FF3E80E0"
 DEFAULT_NO_DATA_COLOR = "00000000"
@@ -12,10 +14,20 @@ def fetch_current_data():
     Returns a JSON representation of the current data.
     """
     data = starlink_grpc.status_data()
-    return json.dumps(data[0])
+    data2 = starlink_grpc.history_stats(-1)
+    final = {
+        "download_throughput_bps": data[0]["downlink_throughput_bps"],
+        "upload_throughput_bps": data[0]["uplink_throughput_bps"],
+        "ping_latency_ms": data[0]["pop_ping_latency_ms"],
+        "power_usage_watts": data2[6]["latest_power"],
+        "fraction_obstructed": data[0]["fraction_obstructed"],
+        "state": data[0]["state"],
+        "alerts": data[2],
+    }
+    return json.dumps(final)
 
 
-def get_starlink_model():
+def get_starlink_inital_data():
     """
     Get the model of the Starlink dish.
 
@@ -25,12 +37,16 @@ def get_starlink_model():
     """
 
     data = starlink_grpc.status_data()
+    data2 = MessageToDict(starlink_grpc.get_status())
     if data[0]["hardware_version"] == "rev3_proto2":
         dishy_model = "Standard Actuated"
     else:
         dishy_model = data[0]["hardware_version"]
 
-    full_data = {"dishy_model": dishy_model}
+    full_data = {
+        "dishy_model": dishy_model,
+        "country_code": data2["deviceInfo"]["countryCode"],
+    }
     return full_data
 
 
@@ -41,8 +57,8 @@ def generate_obstruction_map_svg(
     unobstructed_color=DEFAULT_UNOBSTRUCTED_COLOR,
     no_data_color=DEFAULT_NO_DATA_COLOR,
     upscale_factor=4,
-    font="D-DIN",  # Add font parameter
-    font_size=24,  # Add font size parameter
+    font="D-DIN",
+    font_size=40,
 ):
     """
     Generate an SVG image from a Starlink obstruction map with compass directions.

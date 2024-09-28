@@ -1,11 +1,8 @@
 import starlink_grpc, png, json
-from spacex.starlink import StarlinkDish
-
-
-dishy = StarlinkDish()
-dishy.connect()
 
 # print(json.dumps(starlink_grpc.status_data(), indent=4))
+print(starlink_grpc.get_status())
+# print(json.dumps(starlink_grpc.history_stats(-1), indent=4))
 
 
 DEFAULT_OBSTRUCTED_COLOR = "FFED524A"
@@ -165,6 +162,3 @@ def generate_obstruction_map_svg(
 
     with open(filename, "w") as out_file:
         out_file.write("\n".join(svg_content))
-
-
-generate_obstruction_map_svg(starlink_grpc.obstruction_map())
