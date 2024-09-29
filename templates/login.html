@@ -4,27 +4,37 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Login</title>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static',filename='index.css') }}"
+        />
     </head>
     <body>
-        <h2>Login</h2>
-        <form method="POST">
-            <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                required
-            />
-            <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                required
-            />
-            <button class="button" type="submit">Login</button>
-        </form>
-        <a href="{{ url_for('register') }}">
-            <button class="button" type="button">Register</button>
-        </a>
+        <nav class="header">
+            <h2>Login to Starlink Dashboard</h2>
+        </nav>
+        <div class="input-form">
+            <form method="POST" class="input-form">
+                <input
+                    class="input-box"
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    required
+                />
+                <input
+                    class="input-box"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                />
+                <button class="button" type="submit" id="login-button">
+                    Login
+                </button>
+            </form>
+        </div>
         {% with messages = get_flashed_messages(with_categories=true) %} {% if
         messages %}
         <ul>
