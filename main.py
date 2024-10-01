@@ -4,6 +4,7 @@ from flask import Flask
 from flask_socketio import SocketIO
 from dotenv import load_dotenv
 from flask_login import LoginManager
+from flask_minify import Minify
 
 from database import get_db, init_db
 from routing import routing
@@ -13,6 +14,7 @@ from user import User
 app = Flask(__name__)
 load_dotenv()
 app.secret_key = os.getenv("SECRET_KEY")
+Minify(app=app, html=True, js=True, cssless=True)
 socketio = SocketIO(app)
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
