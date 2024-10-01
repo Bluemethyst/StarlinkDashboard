@@ -109,19 +109,31 @@ socket.on("data_update", function (rawdata) {
     upDownChart.data.labels.push(currentTime);
     powerUsageChart.data.labels.push(currentTime);
 
-    fractionObstructed.innerHTML = `Fraction Obstructed: ${data.fraction_obstructed.toFixed(
+    fractionObstructed.innerHTML = `<span class="bold">Fraction Obstructed:</span> ${data.fraction_obstructed.toFixed(
         2
     )}`;
-    connectionState.innerHTML = `Connection State: ${data.state}`;
+    connectionState.innerHTML = `<span class="bold">Connection State:</span> ${data.state}`;
 
     for (const [key, value] of Object.entries(data.alerts)) {
         if (value) {
-            const listItem = document.createElement("li");
-            listItem.textContent = key;
-            alerts.appendChild(listItem);
-        } else {
-            alertsLabel.innerHTML = "Alerts: NONE";
+            const formattedKey = formatAlertText(key); // Format the key
+            const existingAlert = Array.from(alerts.children).find(
+                (listItem) => listItem.textContent === formattedKey
+            );
+
+            if (!existingAlert) {
+                const listItem = document.createElement("li");
+                listItem.textContent = formattedKey; // Use formatted alert text here
+                alerts.appendChild(listItem);
+            }
         }
+    }
+
+    // Optionally update the alertsLabel only if there are no alerts
+    if (alerts.children.length === 0) {
+        alertsLabel.innerHTML = `<span class="bold">Alerts:</span> NONE`;
+    } else {
+        alertsLabel.innerHTML = `<span class="bold">Alerts:</span>`;
     }
 
     latencyChart.data.datasets[0].data.push(data.ping_latency_ms);
@@ -192,6 +204,14 @@ function getInitalData() {
             dishyVersion.innerHTML = data.dishy_model;
         });
     });
+}
+
+function formatAlertText(alertKey) {
+    return alertKey
+        .replace(/^alert_/, "") // Remove the 'alert_' prefix
+        .split("_") // Split the string by underscores
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
+        .join(" "); // Join the words back with spaces
 }
 
 /**

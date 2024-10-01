@@ -136,3 +136,7 @@ h2 {
 .input-box:focus {
     outline: none;
 }
+
+.bold {
+    font-family: "D-DIN-Bold", sans-serif;
+}
