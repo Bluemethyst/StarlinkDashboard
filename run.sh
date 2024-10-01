@@ -23,7 +23,7 @@ install_requirements() {
         while read -r line; do
             package=$(printf "$line" | cut -d'=' -f1) # Get the package name
             if ! is_package_installed "$package"; then
-                printf "${Yellow}$package is not installed. Installing...\n"
+                printf "${Yellow}$package is not installed. Installing...${Color_Off}\n"
                 pip install "$line" # Install the package with its version
             else
                 printf "${Green}$package is already installed.\n"
@@ -63,7 +63,7 @@ fi
 printf "${Green}Starting web interface...\n"
 # Run the Python script (replace script.py with your script name)
 SECONDS=0
-python webapp/main.py
+python main.py
 printf "${Green}Web interface ran for %s seconds.\n" "$SECONDS"
 
 printf "${Red}Exiting...\n"
