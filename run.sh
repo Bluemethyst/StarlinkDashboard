@@ -60,6 +60,15 @@ if [ "$1" == "repair" ]; then
     install_requirements
 fi
 
+if [ ! -f ".env" ]; then
+    printf "${Red}No secret key file found! Creating...\n"
+    read -p "Enter a secret word: " secret_key
+
+    # Create or overwrite the .env file with the SECRET_KEY
+    echo "SECRET_KEY=$secret_key" >.env
+    printf "${Green}secret key created.\n"
+fi
+
 printf "${Green}Starting web interface...\n"
 # Run the Python script (replace script.py with your script name)
 SECONDS=0
